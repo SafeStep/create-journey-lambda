@@ -7,7 +7,7 @@ var time = new Date();
 
 exports.handler = async function(e, ctx, callback) {
     
-    result = await addJourney(e.journey);
+    await addJourney(e.journey);
     return;
 }
 
@@ -26,7 +26,7 @@ const addJourney = (journey) => {
 
         try {
             await docClient.put(params).promise();  // appends the journey to the journey-store table
-            resolve(journey.result);
+            resolve(200);
         } catch (error){
             reject(error);
         }
