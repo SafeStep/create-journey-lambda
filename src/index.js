@@ -1,26 +1,34 @@
-const { docClient, journeyStore} = require("../src/awsinfo");
+const { docClient, tableName} = require("../src/awsinfo");
+const { v4: uuidv4 } = require('uuid');
+const { resolve } = require("path/posix");
+const { rejects } = require("assert");
+
+var time = new Date();
 
 exports.handler = async function(e, ctx, callback) {
+    
+    result = await addJourney(e.journey);
+    return;
+}
 
-    var params = {
-        Item: {
-            JID: e.journeyID,
-            UID: e.userID,
-            time: e.startTime,
-            start: e.startPoint,
-            end: e.endPoint,
-            status: e.status
-        },
+// function to be called to add a journey to the journey-store table.
+// takes the journey object as the parameter
+const addJourney = (journey) => {
+    return new Promise(async (resolve, reject) => {
+        let journeyToAdd = { ...journey }
+        journeyToAdd.journeyID = uuidv4();  // generates a uuid for the journey id
+        journeyToAdd.startTime = time.getHours() + ":" + time.getMinutes();  // generates the start time for the journey
 
-        TableName: "journey-store"
-    };
+        const params = {
+            TableName: tableName,
+            Item: journey  // specifies the journey object to add
+        };
 
-    docClient.put(params, function(error, data){
-        if(error){
-            callback(error, null);
+        try {
+            await docClient.put(params).promise();  // appends the journey to the journey-store table
+            resolve(journey.result);
+        } catch (error){
+            reject(error);
         }
-        else{
-            callback(null, data);
-        }
-    });
+    })
 }

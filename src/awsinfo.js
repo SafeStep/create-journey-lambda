@@ -1,5 +1,7 @@
 const AWS = require("aws-sdk");
-const journeyStore = "journey-store";
+const tableName = "journey-store";  // declares the name of the DynamoDB table in use
+
+var dynamodbHost; // declares the variable for the host address of the DynamoDB table
 
 if (process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test") {  // if an alternate host is defined
     dynamodbHost = "http://localhost:8000";  // set the local ip
