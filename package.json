@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/SafeStep/create-journey-lambda/issues"
   },
-  "homepage": "https://github.com/SafeStep/create-journey-lambda#readme"
+  "homepage": "https://github.com/SafeStep/create-journey-lambda#readme",
+  "dependencies": {
+    "node": "^16.6.1"
+  }
 }
