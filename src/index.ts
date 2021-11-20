@@ -1,13 +1,11 @@
 import 'reflect-metadata';
 import { Container } from "typedi"
 import Injector from './injector';
-import { SQSEvent } from "aws-lambda";
 import Processor from "./processor";
+import { CreateJourneyRequest } from './types';
 
-export const handler = async (event: SQSEvent) => {
+export const handler = async (event: CreateJourneyRequest) => {
     await Injector.init();
     const processor = Container.get(Processor);
-    for (const record of event.Records) {
-        await processor.process(record);
-    }
+    processor.process(event);
 }

@@ -1,8 +1,9 @@
-import { SQSRecord } from "aws-lambda";
+import { Service } from "typedi";
+import { CreateJourneyRequest, Journey } from "./types";
 
+@Service()
 export default class Processor {
-    
-    process(record: SQSRecord) {
-
+    process(event: CreateJourneyRequest): any {
+        return;
     }
 }

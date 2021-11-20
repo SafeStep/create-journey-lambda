@@ -22,11 +22,14 @@
   "homepage": "https://github.com/SafeStep/create-journey-lambda#readme",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.85",
+    "@types/jest": "^27.0.3",
+    "@types/uuid": "^8.3.3",
     "jest": "^27.3.1",
     "ts-jest": "^27.0.7"
   },
   "dependencies": {
     "aws-sdk": "^2.1033.0",
-    "typedi": "^0.10.0"
+    "typedi": "^0.10.0",
+    "uuid": "^8.3.2"
   }
 }
