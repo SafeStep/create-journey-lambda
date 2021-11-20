@@ -13,9 +13,9 @@ interface CreateJourneyRequest {
 }
 
 interface Journey {
-    JourneyId: string,
+    journeyId: string,
     greenId: string,
-    startTime: Date,
+    startTime: number,
     startPoint: GeoCoordinate,
     endPoint: GeoCoordinate,
     path: GeoCoordinate[],
