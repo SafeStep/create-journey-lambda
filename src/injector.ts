@@ -1,5 +1,5 @@
 import Container from "typedi"
-
+import { DocumentClient } from "aws-sdk/clients/dynamodb"
 
 export default abstract class Injector {
     static async init() {
@@ -13,5 +13,7 @@ export default abstract class Injector {
             console.error(e);
             throw "Could not initialise env depedencies"
         }
+
+        Container.set(DocumentClient, new DocumentClient());
     }
 }
