@@ -1,8 +1,11 @@
 {
   "name": "create-journey-lambda",
   "version": "1.0.0",
-  "description": "lambda for creating a user's journey",
+  "description": "",
   "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "test": "jest"
   },
@@ -10,13 +13,20 @@
     "type": "git",
     "url": "git+https://github.com/SafeStep/create-journey-lambda.git"
   },
-  "author": "Kyle Humphreys",
+  "keywords": [],
+  "author": "Ollie Pugh, Kyle Humphreys",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SafeStep/create-journey-lambda/issues"
   },
   "homepage": "https://github.com/SafeStep/create-journey-lambda#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.85",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7"
+  },
   "dependencies": {
-    "node": "^16.6.1"
+    "aws-sdk": "^2.1033.0",
+    "typedi": "^0.10.0"
   }
 }
