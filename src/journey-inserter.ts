@@ -7,22 +7,26 @@ import { config } from "aws-sdk"
 export default class JourneyInserter {
     
     private documentClient: DocumentClient;
-    private readonly awsRegion: string;
     private readonly journeyStoreName: string;
 
     constructor(
         documentClient: DocumentClient,
-        @Inject("aws_region") awsRegion: string,
         @Inject("journey_store_name") journeyStoreName: string
         ) {
-        this.documentClient = documentClient
-        this.awsRegion = awsRegion;
+        this.documentClient = documentClient;
         this.journeyStoreName = journeyStoreName;
     }
 
-    insert(journey: Journey) {
-        config.update({
-            region: this.awsRegion
-        })
+    async insert(journey: Journey) {
+        const params: DocumentClient.PutItemInput = {
+            TableName: this.journeyStoreName,
+            Item: journey
+        }
+        try {
+            await this.documentClient.put(params).promise()
+        }
+        catch (err) {
+            throw err
+        }
     }
 }

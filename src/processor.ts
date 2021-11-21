@@ -15,15 +15,21 @@ export default class Processor {
     async process(event: CreateJourneyRequest): Promise<Journey> {
         const journeyId = v4();
 
-        const recordToAdd: Journey = {
+        const journey: Journey = {
             ...event,
             journeyId: journeyId,
             status: "started",
             startTime: Date.now()
         }
 
-        this.journeyInserter.insert(recordToAdd);
+        try {
+            await this.journeyInserter.insert(journey);
+        }
+        catch (e){
+            console.error(e)
+            throw new Error("Failed to insert into journey store")
+        }
 
-        return recordToAdd;
+        return journey;
     }
 }
