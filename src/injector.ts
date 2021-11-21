@@ -14,6 +14,6 @@ export default abstract class Injector {
             throw "Could not initialise env depedencies"
         }
 
-        Container.set(DocumentClient, new DocumentClient());
+        Container.set(DocumentClient, new DocumentClient({region: Container.get("aws_region")}));
     }
 }
