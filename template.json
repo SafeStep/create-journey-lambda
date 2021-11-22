@@ -1,0 +1,51 @@
+{
+    "AWSTemplateFormatVersion":"2010-09-09", 
+    "Description":"Stack to create the add journey system", 
+    "Resources": {
+        "CreateJourneyRole": {
+            "Type":"AWS::IAM::Role", 
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version":"2012-10-17", 
+                    "Statement":[ {"Effect":"Allow", "Principal": {"Service":["lambda.amazonaws.com"]}, "Action":["sts:AssumeRole"] }]
+                }, 
+                "Path":"/", 
+                "Policies":[ {
+                    "PolicyName":"CreateJourneyPolicy", 
+                    "PolicyDocument": {
+                        "Version":"2012-10-17", 
+                        "Statement":[ {
+                                "Effect":"Allow", 
+                                "Action":["logs:*"], 
+                                "Resource":"arn:aws:logs:*:*:*"
+                            },  {
+                                "Effect":"Allow", 
+                                "Action":["dynamodb:PutItem"], 
+                                "Resource":"arn:aws:dynamodb:eu-west-1:209523969378:table/journey-store"
+                            }
+                        ]
+                    }
+                }]
+            }
+        }, 
+        "CreateJourneyLambda": {
+            "Type":"AWS::Lambda::Function", 
+            "Properties": {
+                "FunctionName":"create-journey", 
+                "Role": {"Fn::GetAtt":["CreateJourneyRole", "Arn"] }, 
+                "Runtime":"nodejs12.x", 
+                "Handler":"dist/index.handler", 
+                "Code": {
+                    "S3Bucket":"safe-step-lambda-functions-source", 
+                    "S3Key":"create-journey.zip",
+                    "S3ObjectVersion": "OVERWRITTEN"
+                },
+                "Environment": {
+                    "Variables": {
+                        "NODE_ENV": "production"
+                    }
+                }
+            }
+        }
+    }
+}
