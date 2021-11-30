@@ -17,7 +17,7 @@ jest.mock('uuid', () => {
 describe("Processor class tests", () => {
     beforeEach(() => {
         (JourneyInserter as jest.Mock).mockClear();
-      });
+    });
 
     it("Should create a UUID for the user", async () => {
         // given
@@ -75,6 +75,24 @@ describe("Processor class tests", () => {
         expect(mockInserterParam.startTime).toBeGreaterThanOrEqual(now-startTimeThreshold)
         expect(mockInserterParam.startTime).toBeLessThan(now+startTimeThreshold)
         expect(mockInserterParam.path).toBe(input.path)
+    })
+
+    it("Should throw exception if failed to insert into store", async () => {
+        // given
+        let input = getValidInput();
+
+        //@ts-ignore
+        v4.mockReturnValueOnce(JOURNEY_ID)
+        //@ts-ignore
+        const mockInserter = new JourneyInserter();
+        //@ts-ignore
+        mockInserter.insert = () => {return new Promise((resolve, reject) => {reject("my failure")})}
+        const sut = new Processor(mockInserter);
+
+        // then
+        await expect(sut.process(input))
+        .rejects
+        .toThrow("Failed to insert into journey store");
     })
 });
 

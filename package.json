@@ -14,7 +14,7 @@
     "url": "git+https://github.com/SafeStep/create-journey-lambda.git"
   },
   "keywords": [],
-  "author": "Ollie Pugh, Kyle Humphreys",
+  "author": "Ollie Pugh",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SafeStep/create-journey-lambda/issues"
