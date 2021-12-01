@@ -34,7 +34,7 @@ pipeline {
         stage("Test") {
             steps {
                 sh "npm install" // install local including test packages
-                sh "npm run test-unit"
+                sh "npm run test"
             }
         }
         stage("Deploy") {
