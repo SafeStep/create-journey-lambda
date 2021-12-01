@@ -16,7 +16,10 @@ export default class Processor {
         const journeyId = v4();
 
         const journey: Journey = {
-            ...event,
+            greenId: event.greenId,
+            startPoint: event.startPoint,
+            endPoint: event.endPoint,
+            path: event.path,
             journeyId: journeyId,
             status: "started",
             startTime: Date.now()
