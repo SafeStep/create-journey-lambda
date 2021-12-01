@@ -94,6 +94,18 @@ describe("Processor class tests", () => {
         .rejects
         .toThrow("Failed to insert into journey store");
     })
+    it("Should throw an exception if any inputs are missing", async () => {
+        //@ts-ignore
+        const mockInserter = new JourneyInserter();
+        //@ts-ignore
+        mockInserter.insert = () => {return new Promise((resolve, reject) => {reject("my failure")})}
+        const sut = new Processor(mockInserter);
+        
+        //@ts-expect-error
+        await expect(sut.process({}))
+        .rejects
+        .toThrow("Missing query params");
+    })
 });
 
 const getValidInput = () => {

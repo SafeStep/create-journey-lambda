@@ -13,6 +13,9 @@ export default class Processor {
     }
 
     async process(event: CreateJourneyRequest): Promise<Journey> {
+        if (!("greenId" in event && "startPoint" in event && "endPoint" in event && "path" in event)) {
+            throw new Error("Missing query params")
+        }
         const journeyId = v4();
 
         const journey: Journey = {
